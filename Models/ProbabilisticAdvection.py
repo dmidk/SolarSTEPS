@@ -62,8 +62,9 @@ class ProbabilisticAdvection(object):
         else:
             raise Exception('angle_pert_dist must be either normal or vonmises')
 
-        pert_motion_field[0, :, :] = pert_abs * np.cos(np.arctan(y / x) + beta_noise)
-        pert_motion_field[1, :, :] = pert_abs * np.sin(np.arctan(y / x) + beta_noise)
+        base_angle = np.arctan2(y, x)
+        pert_motion_field[0, :, :] = pert_abs * np.cos(base_angle + beta_noise)
+        pert_motion_field[1, :, :] = pert_abs * np.sin(base_angle + beta_noise)
 
         yhat_maps = self.extrapolate(self.last_map,
                                      pert_motion_field,
